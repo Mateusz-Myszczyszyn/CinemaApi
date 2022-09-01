@@ -12,7 +12,26 @@ namespace CinemaApi.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<CinemaHall> builder)
         {
-            builder.Property(c => c.Name).IsRequired();
+            builder.HasMany(ch => ch.Movies)
+                 .WithMany(m => m.CinemaHalls)
+                 .UsingEntity<MoviePerforming>(
+
+                mp => mp.HasOne(m => m.Movie)
+                .WithMany()
+                .HasForeignKey(m => m.MovieId),
+
+                mp => mp.HasOne(c => c.CinemaHall)
+                .WithMany()
+                .HasForeignKey(c => c.CinemaHallId),
+
+                mp =>
+                {
+                    mp.HasKey(x => new { x.MovieId, x.CinemaHallId });
+                }
+          );
+
+              
+            
         }
     }
 }
