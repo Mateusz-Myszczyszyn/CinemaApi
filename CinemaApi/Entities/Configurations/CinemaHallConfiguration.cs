@@ -30,6 +30,8 @@ namespace CinemaApi.Entities.Configurations
                 }
           );
 
+            builder.Property(c => c.Name).IsRequired();
+
               
             
         }
