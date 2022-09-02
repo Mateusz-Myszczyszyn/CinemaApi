@@ -16,6 +16,8 @@ namespace CinemaApi.Entities
         public DateTime? DateOfBirth { get; set; }
         public virtual Role Role { get; set; }
         public int RoleId { get; set; }
+        public List<SeetReserving> SeetReservings { get; set; }
+
 
     }
 }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace CinemaApi.Entities
 {
-    public class CinemaHall
+    public class Cinema
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Movie> Movies { get; set; }
-        public List<SeetReserving> SeetReservings { get; set; }
-
+        public string Owner { get; set; }
+        public List<Address> Addresses { get; set; }
     }
 }
