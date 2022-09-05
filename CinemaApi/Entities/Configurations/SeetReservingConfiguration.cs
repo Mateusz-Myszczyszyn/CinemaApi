@@ -25,7 +25,7 @@ namespace CinemaApi.Entities.Configurations
             builder.Property(i => i.Rows).IsRequired();
 
 
-            builder.HasKey(x => new { x.Id, x.Rows,x.Seats,x.IsReserved});
+            builder.HasKey(x => new { x.Id, x.Rows,x.Seats});
         }
     }
 }

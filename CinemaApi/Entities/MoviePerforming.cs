@@ -12,7 +12,7 @@ namespace CinemaApi.Entities
         public Movie Movie { get; set; }
         public CinemaHall CinemaHall { get; set; }
         public int CinemaHallId { get; set; }
-        public List<DateTime> MovieShowDates { get; set; }
+        
 
     }
 }

@@ -12,13 +12,14 @@ namespace CinemaApi.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<Address> builder)
         {
-            builder.HasOne(c => c.Cinema)
-                .WithMany(a=>a.Addresses)
-                .HasForeignKey(c => c.CinemaId);
 
             builder.Property(a => a.City).IsRequired().HasMaxLength(10);
             builder.Property(a => a.Street).IsRequired();
             builder.Property(a => a.PostalCode).IsRequired();
+
+            builder.HasOne(c => c.Cinema)
+                .WithMany(a=>a.Addresses)
+                .HasForeignKey(c => c.CinemaId);
         }
     }
 }
