@@ -14,7 +14,9 @@ namespace CinemaApi.Entities
         public DbSet<CinemaHall> CinemaHalls { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<MoviePerforming> MoviePerformings { get; set; }
-
+        public DbSet<Cinema> Cinemas { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<SeetReserving> SeetReservings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

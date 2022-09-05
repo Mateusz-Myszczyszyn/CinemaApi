@@ -14,6 +14,10 @@ namespace CinemaApi.Entities.Configurations
         {
             builder.Property(c => c.Name).IsRequired();
             builder.Property(c => c.Addresses).IsRequired();
+
+            builder.HasMany(c => c.CinemaHalls)
+                .WithOne(c => c.Cinema)
+                .HasForeignKey(f => f.CinemaId);
         }
     }
 }
