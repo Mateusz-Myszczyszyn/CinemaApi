@@ -24,10 +24,8 @@ namespace CinemaApi.Entities.Configurations
                 .WithMany()
                 .HasForeignKey(c => c.CinemaHallId),
 
-                mp =>
-                {
-                    mp.HasKey(x => new { x.MovieId, x.CinemaHallId });
-                }
+                mp => mp.HasKey(x => x.Id)
+
           );
 
             builder.Property(c => c.Name).IsRequired();

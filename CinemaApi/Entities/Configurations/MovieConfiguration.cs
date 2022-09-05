@@ -12,8 +12,8 @@ namespace CinemaApi.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<Movie> builder)
         {
-            builder.Property(m => m.Title).IsRequired();
-            builder.Property(m => m.Director).IsRequired();
+            builder.Property(m => m.Title).IsRequired().HasMaxLength(20);
+            builder.Property(m => m.Director).IsRequired().HasMaxLength(25);
             builder.Property(m => m.Description).HasMaxLength(100);
         }
     }

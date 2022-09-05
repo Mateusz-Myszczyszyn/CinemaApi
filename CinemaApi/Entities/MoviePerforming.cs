@@ -8,11 +8,12 @@ namespace CinemaApi.Entities
 {
     public class MoviePerforming
     {
+        public int Id { get; set; }
         public int MovieId { get; set; }
         public Movie Movie { get; set; }
         public CinemaHall CinemaHall { get; set; }
         public int CinemaHallId { get; set; }
-        
+        public List<ScreenPlay> ScreenPlays { get; set; }
 
     }
 }

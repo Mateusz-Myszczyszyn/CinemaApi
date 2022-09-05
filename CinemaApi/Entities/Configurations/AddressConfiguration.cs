@@ -13,9 +13,9 @@ namespace CinemaApi.Entities.Configurations
         public void Configure(EntityTypeBuilder<Address> builder)
         {
 
-            builder.Property(a => a.City).IsRequired().HasMaxLength(10);
-            builder.Property(a => a.Street).IsRequired();
-            builder.Property(a => a.PostalCode).IsRequired();
+            builder.Property(a => a.City).IsRequired().HasMaxLength(20);
+            builder.Property(a => a.Street).IsRequired().HasMaxLength(20);
+            builder.Property(a => a.PostalCode).IsRequired().HasMaxLength(20);
 
             builder.HasOne(c => c.Cinema)
                 .WithMany(a=>a.Addresses)

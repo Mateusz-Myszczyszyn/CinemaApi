@@ -13,7 +13,9 @@ namespace CinemaApi.Entities.Configurations
         public void Configure(EntityTypeBuilder<Cinema> builder)
         {
             builder.Property(c => c.Name).IsRequired();
-            
+            builder.Property(c => c.Owner).IsRequired();
+            builder.Property(c => c.WorkersQuantity).HasDefaultValue(100);
+
 
             builder.HasMany(c => c.CinemaHalls)
                 .WithOne(c => c.Cinema)
