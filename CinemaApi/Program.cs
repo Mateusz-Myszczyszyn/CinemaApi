@@ -1,3 +1,4 @@
+using CinemaApi;
 using CinemaApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetService<CinemaDbContext>();
+
+var pendingMigration = dbContext.Database.GetPendingMigrations();
+if (pendingMigration.Any())
+{
+    dbContext.Database.Migrate();
+}
+
+DataSeeder.Seed(dbContext);
 
 app.UseHttpsRedirection();
 
