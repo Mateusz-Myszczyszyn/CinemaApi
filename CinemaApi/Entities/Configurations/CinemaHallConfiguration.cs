@@ -25,6 +25,7 @@ namespace CinemaApi.Entities.Configurations
                 .HasForeignKey(c => c.CinemaHallId),
 
                 mp => mp.HasKey(x => x.Id)
+                
 
           );
 

@@ -17,6 +17,7 @@ namespace CinemaApi.Entities.Configurations
             builder.HasOne(mp => mp.MoviePerforming)
                 .WithMany(mp => mp.ScreenPlays)
                 .HasForeignKey(mp => mp.MoviePerformingId);
+                
         }
     }
 }
