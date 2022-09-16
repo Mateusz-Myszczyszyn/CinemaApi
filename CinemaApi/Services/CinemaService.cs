@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CinemaApi.Services
 {
-    public class CinemaService
+    public class CinemaService : ICinemaService
     {
         private readonly CinemaDbContext _context;
 
@@ -18,9 +18,9 @@ namespace CinemaApi.Services
             _context = context;
         }
 
-        public List<Cinema> GetAll()
+        public  List<Cinema> GetAll()
         {
-            var cinemas = _context.Cinemas.ToList();
+            var cinemas =  _context.Cinemas.ToList();
 
             if (!cinemas.Any()) throw new NotFoundException("Cinemas not found");
 
