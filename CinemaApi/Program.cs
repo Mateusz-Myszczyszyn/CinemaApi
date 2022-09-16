@@ -1,6 +1,7 @@
 using CinemaApi;
 using CinemaApi.Entities;
 using CinemaApi.Middleware;
+using CinemaApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,11 +13,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<ICinemaService, CinemaService>();
 
 builder.Services.AddDbContext<CinemaDbContext>(
     options => options
     //.UseLazyLoadingProxies()
     .UseSqlServer(builder.Configuration.GetConnectionString("CinemaDbConnection")));
+
 
 var app = builder.Build();
 
