@@ -1,4 +1,5 @@
-﻿using CinemaApi.Entities;
+﻿using CinemaApi.Dtos.CinemaDtos;
+using CinemaApi.Entities;
 
 namespace CinemaApi.Services
 {
@@ -7,5 +8,6 @@ namespace CinemaApi.Services
         void Delete(int id);
         List<Cinema> GetAll();
         Cinema GetById(int id);
+        int Create(CreateCinemaDto dto);
     }
 }

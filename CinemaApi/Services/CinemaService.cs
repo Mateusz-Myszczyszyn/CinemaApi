@@ -1,6 +1,9 @@
-﻿using CinemaApi.Entities;
+﻿using AutoMapper;
+using CinemaApi.Dtos.CinemaDtos;
+using CinemaApi.Entities;
 using CinemaApi.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +15,19 @@ namespace CinemaApi.Services
     public class CinemaService : ICinemaService
     {
         private readonly CinemaDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CinemaService(CinemaDbContext context)
+        public CinemaService(CinemaDbContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public  List<Cinema> GetAll()
         {
-            var cinemas =  _context.Cinemas.ToList();
+            var cinemas = _context.Cinemas
+                .Include(c=>c.Addresses)
+                .ToList();
 
             if (!cinemas.Any()) throw new NotFoundException("Cinemas not found");
 
@@ -29,7 +36,9 @@ namespace CinemaApi.Services
 
         public Cinema GetById(int id)
         {
-            var cinema = _context.Cinemas.FirstOrDefault(c => c.Id == id);
+            var cinema =  _context.Cinemas
+                .Include(c=>c.Addresses)
+                .FirstOrDefault(c => c.Id == id);
 
             if (cinema is null) throw new NotFoundException("Specific cinema not found");
 
@@ -44,6 +53,21 @@ namespace CinemaApi.Services
 
             _context.Cinemas.Remove(cinema);
             _context.SaveChanges();
+        }
+
+        public int Create(CreateCinemaDto dto)
+        {
+            var createdCinema = _mapper.Map<Cinema>(dto);
+
+            if(createdCinema != null)
+            {
+                _context.Cinemas.Add(createdCinema);
+                _context.SaveChanges();
+                return createdCinema.Id;
+            }
+
+            return 0;
+            
         }
 
     }

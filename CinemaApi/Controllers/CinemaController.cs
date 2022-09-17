@@ -1,4 +1,5 @@
-﻿using CinemaApi.Entities;
+﻿using CinemaApi.Dtos.CinemaDtos;
+using CinemaApi.Entities;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,9 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Cinema> GetAll()
+        public ActionResult<Cinema>GetAll()
         {
-            var cinemas =_service.GetAll();
+            var cinemas = _service.GetAll();
 
             return Ok(cinemas);
             
@@ -27,9 +28,17 @@ namespace CinemaApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<Cinema> GetById([FromRoute]int id)
         {
-            var cinema = _service.GetById(id);
+            var cinema =_service.GetById(id);
 
             return Ok(cinema);
+        }
+
+        [HttpPost]
+        public ActionResult Create([FromBody]CreateCinemaDto dto)
+        {
+            var createdId = _service.Create(dto);
+
+            return Created($"/api/cinema/{createdId}", null);
         }
     }
 }
