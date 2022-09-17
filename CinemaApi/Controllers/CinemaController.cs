@@ -1,17 +1,12 @@
 ﻿using CinemaApi.Entities;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CinemaApi.Controllers
 {
     [Route("api/cinema")]
     [ApiController]
-    public class CinemaController
+    public class CinemaController : ControllerBase
     {
         private readonly ICinemaService _service;
 
@@ -21,20 +16,20 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet]
-        public IResult GetAll()
+        public ActionResult<Cinema> GetAll()
         {
             var cinemas =_service.GetAll();
 
-            return Results.Ok(cinemas);
+            return Ok(cinemas);
             
         }
 
-        [HttpGet("/{id}")]
-        public IResult GetById([FromRoute]int id)
+        [HttpGet("{id}")]
+        public ActionResult<Cinema> GetById([FromRoute]int id)
         {
             var cinema = _service.GetById(id);
 
-            return Results.Ok(cinema);
+            return Ok(cinema);
         }
     }
 }
