@@ -40,5 +40,21 @@ namespace CinemaApi.Controllers
 
             return Created($"/api/cinema/{createdId}", null);
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute]int id)
+        {
+            _service.Delete(id);
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Update([FromBody]CreateCinemaDto dto,[FromRoute] int id)
+        {
+            _service.Update(dto, id);
+
+            return Ok();
+        }
     }
 }

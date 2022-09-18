@@ -9,5 +9,6 @@ namespace CinemaApi.Services
         List<Cinema> GetAll();
         Cinema GetById(int id);
         int Create(CreateCinemaDto dto);
+        void Update(CreateCinemaDto dto, int id);
     }
 }

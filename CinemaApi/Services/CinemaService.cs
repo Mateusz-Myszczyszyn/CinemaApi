@@ -26,7 +26,7 @@ namespace CinemaApi.Services
         public  List<Cinema> GetAll()
         {
             var cinemas = _context.Cinemas
-                .Include(c=>c.Addresses)
+                .Include(a=>a.Addresses)
                 .ToList();
 
             if (!cinemas.Any()) throw new NotFoundException("Cinemas not found");
@@ -36,9 +36,7 @@ namespace CinemaApi.Services
 
         public Cinema GetById(int id)
         {
-            var cinema =  _context.Cinemas
-                .Include(c=>c.Addresses)
-                .FirstOrDefault(c => c.Id == id);
+            var cinema =  _context.Cinemas.FirstOrDefault(c => c.Id == id);
 
             if (cinema is null) throw new NotFoundException("Specific cinema not found");
 
@@ -68,6 +66,19 @@ namespace CinemaApi.Services
 
             return 0;
             
+        }
+
+        public void Update(CreateCinemaDto dto, int id)
+        {
+            var updatedCinema = _mapper.Map<Cinema>(dto);
+            var cinemaToUpdate = _context.Cinemas.FirstOrDefault(c => c.Id == id);
+
+            if (cinemaToUpdate is null) throw new NotFoundException("Specific cinema not found");
+
+            cinemaToUpdate.Name = updatedCinema.Name;
+            cinemaToUpdate.Owner = updatedCinema.Owner;
+            cinemaToUpdate.WorkersQuantity = updatedCinema.WorkersQuantity;
+            _context.SaveChanges();
         }
 
     }

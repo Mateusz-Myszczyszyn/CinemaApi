@@ -14,16 +14,6 @@ namespace CinemaApi.Dtos.CinemaDtos
         [Required]
         public string Owner { get; set; }
         public int WorkersQuantity { get; set; }
-        [Required]
-        [MaxLength(20)]
-        public string City { get; set; }
-        [Required]
-        [MaxLength(20)]
-        public string Street { get; set; }
-        [Required]
-        [MaxLength(20)]
-        public string PostalCode { get; set; }
-
 
     }
 }
