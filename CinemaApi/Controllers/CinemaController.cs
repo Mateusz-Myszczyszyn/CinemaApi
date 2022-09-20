@@ -1,4 +1,4 @@
-﻿using CinemaApi.Dtos.CinemaDtos;
+﻿using CinemaApi.Dtos;
 using CinemaApi.Entities;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Mvc;

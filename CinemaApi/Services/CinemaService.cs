@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CinemaApi.Dtos.CinemaDtos;
+using CinemaApi.Dtos;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
 using Microsoft.AspNetCore.Mvc;

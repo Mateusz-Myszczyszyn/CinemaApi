@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<ICinemaService, CinemaService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddDbContext<CinemaDbContext>(
     options => options
     //.UseLazyLoadingProxies()
