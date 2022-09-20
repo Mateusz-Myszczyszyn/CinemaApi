@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CinemaApi.Dtos.CinemaDtos
+namespace CinemaApi.Dtos
 {
     public class CreateCinemaDto
     {
