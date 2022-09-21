@@ -23,6 +23,22 @@ namespace CinemaApi.Controllers
             return Ok(Addresses);
         }
 
+        [HttpGet("{addressId}")]
+        public ActionResult<AddressDto> GetById([FromRoute]int cinemaId, [FromRoute]int addressId)
+        {
+            var specificAddress = _service.GetById(cinemaId, addressId);
+
+            return Ok(specificAddress);
+        }
+
+        [HttpPost]
+        public ActionResult Create([FromRoute]int cinemaId,[FromBody]CreateAddressDto dto)
+        {
+            var newAddressId = _service.Create(cinemaId, dto);
+
+            return Created($"api/cinema/{cinemaId}/address/{newAddressId}", null);
+        }
+
 
     }
 }

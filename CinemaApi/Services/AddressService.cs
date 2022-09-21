@@ -22,7 +22,39 @@ namespace CinemaApi.Services
             
             var AddressesDto = _mapper.Map<List<AddressDto>>(cinema.Addresses);
 
+            if (!AddressesDto.Any()) throw new NotFoundException($"Addresses for this cinema({cinemaId}) do not exist");
+
             return AddressesDto;
+
+        }
+
+        public AddressDto GetById(int cinemaId, int addressId)
+        {
+            var cinema = GetCinemaById(cinemaId);
+
+            var AddressesDto = _mapper.Map<List<AddressDto>>(cinema.Addresses);
+
+            var specificAddress = AddressesDto.FirstOrDefault(c => c.Id == addressId);
+
+            if (specificAddress is null) throw new NotFoundException($"Specific address for this cinema({cinemaId}) cannot be found");
+
+            return specificAddress;
+        }
+
+        public int Create(int cinemaId,CreateAddressDto dto)
+        {
+            var cinema = GetCinemaById(cinemaId);
+
+            var newAddress = _mapper.Map<Address>(dto);
+
+            newAddress.CinemaId = cinema.Id;
+
+            if (newAddress is null) throw new BadRequestException("Something went wrong with creating new address");
+
+            _context.Addresses.Add(newAddress);
+            _context.SaveChanges();
+
+            return newAddress.Id;
 
         }
 
@@ -34,9 +66,9 @@ namespace CinemaApi.Services
 
             if (cinema is null) throw new NotFoundException("Specific cinema not found");
 
-            if (!cinema.Addresses.Any()) throw new NotFoundException($"Addresses for this cinema({cinemaId}) do not exist");
-
             return cinema;
         }
+
+        
     }
 }
