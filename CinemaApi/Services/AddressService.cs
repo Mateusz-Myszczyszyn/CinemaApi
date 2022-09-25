@@ -16,7 +16,7 @@ namespace CinemaApi.Services
             _context = context;
             _mapper = mapper;
         }
-        public List<AddressDto> GetAll(int cinemaId)
+        public List<AddressDto> GetAll(int cinemaId)///
         {
             var cinema = GetCinemaById(cinemaId);
             
