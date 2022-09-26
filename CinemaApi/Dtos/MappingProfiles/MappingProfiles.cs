@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using CinemaApi.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CinemaApi.Dtos.MappingProfiles
 {
@@ -16,13 +11,17 @@ namespace CinemaApi.Dtos.MappingProfiles
 
             CreateMap<Address, AddressDto>();
 
-            CreateMap<AddressDto, Address>();
+            //CreateMap<AddressDto, Address>();
 
             CreateMap<CreateAddressDto,Address>();
 
-            CreateMap<Cinema,CinemaDto>();
+            CreateMap<Cinema, CinemaDto>();
 
-            CreateMap<CinemaDto, Cinema>();
+            CreateMap<Movie, MovieDto>();
+                
+            CreateMap<CreateMovieDto, Movie>();
+                
+            
         }
     }
 }

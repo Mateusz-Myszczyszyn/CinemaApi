@@ -4,6 +4,7 @@ using CinemaApi.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaApi.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220926192954_fixes")]
+    partial class fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +54,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("CinemaId");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Cinema", b =>
@@ -78,7 +80,7 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cinemas", (string)null);
+                    b.ToTable("Cinemas");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.CinemaHall", b =>
@@ -100,7 +102,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("CinemaId");
 
-                    b.ToTable("CinemaHalls", (string)null);
+                    b.ToTable("CinemaHalls");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Movie", b =>
@@ -130,7 +132,7 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.MoviePerforming", b =>
@@ -153,7 +155,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MoviePerformings", (string)null);
+                    b.ToTable("MoviePerformings");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Role", b =>
@@ -169,7 +171,7 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -212,7 +214,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("MoviePerformingId");
 
-                    b.ToTable("ScreenPlays", (string)null);
+                    b.ToTable("ScreenPlays");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.SeetReserving", b =>
@@ -243,7 +245,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SeetReservings", (string)null);
+                    b.ToTable("SeetReservings");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.User", b =>
@@ -280,7 +282,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Address", b =>

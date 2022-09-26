@@ -12,11 +12,11 @@ namespace CinemaApi
     {
         public static void Seed(CinemaDbContext context)
         {
-              var movieGen = new Faker<Movie>("pl")
-                .RuleFor(c => c.Title, c => c.Random.Words(1))
-                .RuleFor(c => c.Description, c => c.Lorem.Sentence())
-                .RuleFor(c => c.Director, c => c.Person.FullName)
-                .RuleFor(c => c.Premiere, c => c.Date.Between(new DateTime(2012,1,1), new DateTime(2016, 12, 31)));
+            var movieGen = new Faker<Movie>("pl")
+              .RuleFor(c => c.Title, c => c.Random.Words(1))
+              .RuleFor(c => c.Description, c => c.Lorem.Sentence())
+              .RuleFor(c => c.Director, c => c.Person.FullName);
+                //.RuleFor(c => c.Premiere, c => c.Date.Between(new DateOnly(2012,1,1), new DateOnly(2016, 12, 31)));
 
             var cinemaGen = new Faker<Cinema>("pl")
                 .RuleFor(c => c.Name, c => c.Random.Words(2))

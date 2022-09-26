@@ -5,16 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CinemaApi.Entities
+namespace CinemaApi.Dtos
 {
-    public class Movie
+    public class MovieDto
     {
-
         public int Id { get; set; }
+        [Required]
+        [MaxLength(20)]
         public string Title { get; set; }
+        [MaxLength(100)]
         public string Description { get; set; }
+        [Required]
+        [MaxLength(25)]
         public string Director { get; set; }
         public DateTime? Premiere { get; set; }
-        public List<CinemaHall> CinemaHalls { get; set; }
     }
 }
