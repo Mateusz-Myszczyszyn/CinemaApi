@@ -16,7 +16,7 @@ namespace CinemaApi.Services
             _context = context;
             _mapper = mapper;
         }
-        public List<AddressDto> GetAll(int cinemaId)///
+        public List<AddressDto> GetAll(int cinemaId)
         {
             var cinema = GetCinemaById(cinemaId);
             
@@ -55,6 +55,46 @@ namespace CinemaApi.Services
             _context.SaveChanges();
 
             return newAddress.Id;
+
+        }
+
+        public void DeleteById(int cinemaId,int addressId)
+        {
+            var cinema = GetCinemaById(cinemaId);
+
+            var addressToDelete = cinema.Addresses.FirstOrDefault(d => d.Id == addressId);
+
+            if (addressToDelete is null) throw new NotFoundException($"Specific address({addressId}) not found");
+
+            _context.Addresses.Remove(addressToDelete);
+            _context.SaveChanges();
+        }
+
+        public void DeleteAll(int cinemaId)
+        {
+            var cinemaAddresses = GetCinemaById(cinemaId).Addresses.ToList();
+
+            if(!cinemaAddresses.Any()) throw new NotFoundException($"Addresses for this cinema({cinemaId}) do not exist");
+
+            _context.RemoveRange(cinemaAddresses);
+            _context.SaveChanges();
+        }
+
+        public void Update(int cinemaId, int addressId, CreateAddressDto dto)
+        {
+            var cinema = GetCinemaById(cinemaId);
+
+            var mapAddress = _mapper.Map<Address>(dto);
+
+            var addressToUpdate = cinema.Addresses.FirstOrDefault(a => a.Id == addressId);
+
+            if (addressToUpdate is null) throw new NotFoundException($"Specific address({addressId}) not found");
+
+            addressToUpdate.City = dto.City;
+            addressToUpdate.Street = dto.Street;
+            addressToUpdate.PostalCode = dto.PostalCode;
+
+            _context.SaveChanges();
 
         }
 

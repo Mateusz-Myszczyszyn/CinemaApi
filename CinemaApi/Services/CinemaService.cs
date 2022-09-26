@@ -23,24 +23,26 @@ namespace CinemaApi.Services
             _mapper = mapper;
         }
 
-        public  List<Cinema> GetAll()
+        public  List<CinemaDto> GetAll()
         {
-            var cinemas = _context.Cinemas
-                .Include(a=>a.Addresses)
-                .ToList();
+            var cinemas = _context.Cinemas.ToList();
 
-            if (!cinemas.Any()) throw new NotFoundException("Cinemas not found");
+            var mapCinema = _mapper.Map<List<CinemaDto>>(cinemas);
 
-            return cinemas;
+            if (!mapCinema.Any()) throw new NotFoundException("Cinemas not found");
+
+            return mapCinema;
         }
 
-        public Cinema GetById(int id)
+        public CinemaDto GetById(int id)
         {
             var cinema =  _context.Cinemas.FirstOrDefault(c => c.Id == id);
 
-            if (cinema is null) throw new NotFoundException("Specific cinema not found");
+            var mapCinema = _mapper.Map<CinemaDto>(cinema);
 
-            return cinema;
+            if (mapCinema is null) throw new NotFoundException("Specific cinema not found");
+
+            return mapCinema;
         }
 
         public void Delete(int id)
@@ -80,6 +82,7 @@ namespace CinemaApi.Services
             cinemaToUpdate.WorkersQuantity = updatedCinema.WorkersQuantity;
             _context.SaveChanges();
         }
+
 
     }
 }

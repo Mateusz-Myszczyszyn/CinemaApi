@@ -20,6 +20,9 @@ namespace CinemaApi.Dtos.MappingProfiles
 
             CreateMap<CreateAddressDto,Address>();
 
+            CreateMap<Cinema,CinemaDto>();
+
+            CreateMap<CinemaDto, Cinema>();
         }
     }
 }
