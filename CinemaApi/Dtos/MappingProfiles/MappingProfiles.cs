@@ -9,8 +9,10 @@ namespace CinemaApi.Dtos.MappingProfiles
         {
             CreateMap<CreateCinemaDto, Cinema>();
 
-            CreateMap<Address, AddressDto>();
+            CreateMap<Address, AddressDto>()
+                .ForMember(a=>a.CinemaName,a=>a.MapFrom(a=>a.Cinema.Name));
 
+            CreateMap<Address, NoIdAddressDto>();
             //CreateMap<AddressDto, Address>();
 
             CreateMap<CreateAddressDto,Address>();
@@ -20,7 +22,10 @@ namespace CinemaApi.Dtos.MappingProfiles
             CreateMap<Movie, MovieDto>();
                 
             CreateMap<CreateMovieDto, Movie>();
-                
+
+            CreateMap<CinemaHall, CinemaHallDto>();
+
+            CreateMap<CreateCinemaHallDto, CinemaHall>();
             
         }
     }
