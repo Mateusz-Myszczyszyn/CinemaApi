@@ -33,7 +33,6 @@ namespace CinemaApi.Controllers
         public ActionResult<MovieDto> GetById([FromRoute]int movieId)
         {
             var movie = _service.GetById(movieId);
-
             return Ok(movie); 
         }
 
