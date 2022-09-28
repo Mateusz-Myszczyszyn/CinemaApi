@@ -4,6 +4,7 @@ using CinemaApi.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaApi.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927105613_DateFixes")]
+    partial class DateFixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,7 +91,7 @@ namespace CinemaApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int>("CinemaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -98,7 +100,7 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("CinemaId");
 
                     b.ToTable("CinemaHalls");
                 });
@@ -296,13 +298,13 @@ namespace CinemaApi.Migrations
 
             modelBuilder.Entity("CinemaApi.Entities.CinemaHall", b =>
                 {
-                    b.HasOne("CinemaApi.Entities.Address", "Address")
+                    b.HasOne("CinemaApi.Entities.Cinema", "Cinema")
                         .WithMany("CinemaHalls")
-                        .HasForeignKey("AddressId")
+                        .HasForeignKey("CinemaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("Cinema");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.MoviePerforming", b =>
@@ -365,14 +367,11 @@ namespace CinemaApi.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("CinemaApi.Entities.Address", b =>
-                {
-                    b.Navigation("CinemaHalls");
-                });
-
             modelBuilder.Entity("CinemaApi.Entities.Cinema", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("CinemaHalls");
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.CinemaHall", b =>

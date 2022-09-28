@@ -25,7 +25,9 @@ namespace CinemaApi.Services
 
         public  List<CinemaDto> GetAll()
         {
-            var cinemas = _context.Cinemas.ToList();
+            var cinemas = _context.Cinemas
+                .Include(c=>c.Addresses)
+                .ToList();
 
             var mapCinema = _mapper.Map<List<CinemaDto>>(cinemas);
 
@@ -36,7 +38,9 @@ namespace CinemaApi.Services
 
         public CinemaDto GetById(int id)
         {
-            var cinema =  _context.Cinemas.FirstOrDefault(c => c.Id == id);
+            var cinema =  _context.Cinemas
+                .Include(c=> c.Addresses)
+                .FirstOrDefault(c => c.Id == id);
 
             var mapCinema = _mapper.Map<CinemaDto>(cinema);
 
