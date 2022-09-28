@@ -7,16 +7,9 @@ using System.Threading.Tasks;
 
 namespace CinemaApi.Dtos
 {
-    public class CinemaDto
+    public class CreateCinemaHallDto
     {
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string Owner { get; set; }
-
-        public int WorkersQuantity { get; set; }
-
-        public List<NoIdAddressDto> Addresses { get; set; }
     }
 }
