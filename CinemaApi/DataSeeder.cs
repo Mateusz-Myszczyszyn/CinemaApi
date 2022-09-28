@@ -12,7 +12,7 @@ namespace CinemaApi
     {
         public static void Seed(CinemaDbContext context)
         {
-            var movieGen = new Faker<Movie>("pl")
+           /* var movieGen = new Faker<Movie>("pl")
               .RuleFor(c => c.Title, c => c.Random.Words(1))
               .RuleFor(c => c.Description, c => c.Lorem.Sentence())
               .RuleFor(c => c.Director, c => c.Person.FullName);
@@ -54,28 +54,28 @@ namespace CinemaApi
                 .RuleFor(c => c.Seats, c => c.Random.Number(1,10))
                 .RuleFor(c => c.IsReserved, c => c.Random.Bool())
                 .RuleFor(c => c.CinemaHall, hallGen.Generate())
-                .RuleFor(c => c.User, userGen.Generate());
+                .RuleFor(c => c.User, userGen.Generate());*/
 
-            var addresses = addressGen.Generate(5);
+            /*var addresses = addressGen.Generate(5);
             var seetreservings = seetRes.Generate(5);
-            var screenplays = screenPlayGen.Generate(5);
+            var screenplays = screenPlayGen.Generate(5);*/
            /* var users = userGen.Generate(5);
             var movies = movieGen.Generate(5);
             var movieperfs = moviePerfGen.Generate(5);
             var cinemas = cinemaGen.Generate(5);
             var halls = hallGen.Generate(5);*/
 
-            context.AddRange(addresses);
+           /* context.AddRange(addresses);
             context.AddRange(seetreservings);
-            context.AddRange(screenplays);
+            context.AddRange(screenplays);*/
            /* context.AddRange(users);
             context.AddRange(halls);
             context.AddRange(cinemas);
             context.AddRange(movieperfs);
             context.AddRange(movies);*/
 
-            context.SaveChanges();
-
+            //context.SaveChanges();
+            
         }
     }
 }

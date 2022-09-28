@@ -19,6 +19,7 @@ builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<ICinemaService, CinemaService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<ICinemaHallService, CinemaHallService>();
 builder.Services.AddDbContext<CinemaDbContext>(
     options => options
     //.UseLazyLoadingProxies()
