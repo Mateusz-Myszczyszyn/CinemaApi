@@ -14,6 +14,7 @@ namespace CinemaApi.Entities
         public string PostalCode { get; set; }
         public Cinema Cinema { get; set; }
         public int CinemaId { get; set; }
+        public List<CinemaHall> CinemaHalls { get; set; }
 
     }
 }

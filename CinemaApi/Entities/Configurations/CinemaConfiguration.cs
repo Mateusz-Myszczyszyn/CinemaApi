@@ -17,10 +17,6 @@ namespace CinemaApi.Entities.Configurations
             builder.Property(c => c.WorkersQuantity).HasDefaultValue(100);
 
 
-            builder.HasMany(c => c.CinemaHalls)
-                .WithOne(c => c.Cinema)
-                .HasForeignKey(f => f.CinemaId);
-
             /*builder.HasData(new Cinema() { Id = 1, Owner = "Lebovsky", Name = "CinemaCity" },
                             new Cinema() { Id = 2, Owner = "Bill", Name = "Helios" });*/
             

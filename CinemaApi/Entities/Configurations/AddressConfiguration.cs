@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CinemaApi.Entities.Configurations
 {
@@ -20,6 +15,8 @@ namespace CinemaApi.Entities.Configurations
             builder.HasOne(c => c.Cinema)
                 .WithMany(a=>a.Addresses)
                 .HasForeignKey(c => c.CinemaId);
+            
+            builder.HasKey(a => a.Id);
         }
     }
 }
