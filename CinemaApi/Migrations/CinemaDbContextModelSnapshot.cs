@@ -52,7 +52,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("CinemaId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Cinema", b =>
@@ -78,7 +78,7 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cinemas");
+                    b.ToTable("Cinemas", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.CinemaHall", b =>
@@ -100,7 +100,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.ToTable("CinemaHalls");
+                    b.ToTable("CinemaHalls", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Movie", b =>
@@ -130,7 +130,7 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.MoviePerforming", b =>
@@ -153,7 +153,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MoviePerformings");
+                    b.ToTable("MoviePerformings", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Role", b =>
@@ -169,7 +169,7 @@ namespace CinemaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
 
                     b.HasData(
                         new
@@ -212,7 +212,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("MoviePerformingId");
 
-                    b.ToTable("ScreenPlays");
+                    b.ToTable("ScreenPlays", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.SeetReserving", b =>
@@ -243,7 +243,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SeetReservings");
+                    b.ToTable("SeetReservings", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.User", b =>
@@ -280,7 +280,7 @@ namespace CinemaApi.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("CinemaApi.Entities.Address", b =>

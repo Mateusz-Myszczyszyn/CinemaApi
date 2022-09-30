@@ -3,11 +3,6 @@ using CinemaApi.Dtos;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CinemaApi.Services
 {
@@ -77,6 +72,7 @@ namespace CinemaApi.Services
         {
             var address = _context.Addresses
                 .Include(a => a.CinemaHalls)
+                .Include(a=>a.Cinema)
                 .FirstOrDefault(a => a.Id == addressId);
 
             if (address is null) throw new NotFoundException("Specific address not found");

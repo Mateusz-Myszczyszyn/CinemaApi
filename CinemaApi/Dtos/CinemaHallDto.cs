@@ -12,8 +12,8 @@ namespace CinemaApi.Dtos
     {
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
-        public CinemaDto Cinema { get; set; }
+        public string HallName { get; set; }
+        public AddressDto Address { get; set; }
         
     }
 }

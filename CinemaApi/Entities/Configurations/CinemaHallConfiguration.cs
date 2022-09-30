@@ -33,7 +33,7 @@ namespace CinemaApi.Entities.Configurations
                 .WithMany(ch => ch.CinemaHalls)
                 .HasForeignKey(ch => ch.AddressId);
 
-            builder.Property(c => c.Name).IsRequired();
+            builder.Property(c => c.HallName).IsRequired();
 
               
             

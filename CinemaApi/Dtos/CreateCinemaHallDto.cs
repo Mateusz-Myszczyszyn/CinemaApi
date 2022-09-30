@@ -10,6 +10,6 @@ namespace CinemaApi.Dtos
     public class CreateCinemaHallDto
     {
         [Required]
-        public string Name { get; set; }
+        public string HallName { get; set; }
     }
 }
