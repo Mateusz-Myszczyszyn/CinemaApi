@@ -25,8 +25,8 @@ namespace CinemaApi.Dtos.MappingProfiles
                 
             CreateMap<CreateMovieDto, Movie>();
 
-            CreateMap<CinemaHall, CinemaHallDto>()
-                .ForMember(c=>c.Address,c=>c.MapFrom(a=>a.Address));
+            CreateMap<CinemaHall, CinemaHallDto>();
+                
 
             CreateMap<CreateCinemaHallDto, CinemaHall>();
             

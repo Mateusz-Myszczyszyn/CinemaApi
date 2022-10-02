@@ -17,6 +17,8 @@ namespace CinemaApi.Entities.Configurations
                 .HasForeignKey(c => c.CinemaId);
             
             builder.HasKey(a => a.Id);
+
+            
         }
     }
 }

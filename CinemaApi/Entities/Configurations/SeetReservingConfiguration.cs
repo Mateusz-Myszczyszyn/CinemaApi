@@ -21,11 +21,11 @@ namespace CinemaApi.Entities.Configurations
                 .HasForeignKey(ch=>ch.CinemaHallId);
 
             builder.Property(i => i.IsReserved).IsRequired().HasDefaultValue(false);
-            builder.Property(i => i.Seats).IsRequired();
-            builder.Property(i => i.Rows).IsRequired();
+            builder.Property(i => i.Seat).IsRequired();
+            builder.Property(i => i.Row).IsRequired();
 
 
-            builder.HasKey(x => new { x.Id, x.Rows,x.Seats});
+            builder.HasKey(x => new { x.Id, x.Row,x.Seat});
         }
     }
 }

@@ -13,7 +13,7 @@ namespace CinemaApi.Dtos
         public int Id { get; set; }
         [Required]
         public string HallName { get; set; }
-        public AddressDto Address { get; set; }
+        
         
     }
 }

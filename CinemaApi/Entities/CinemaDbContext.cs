@@ -18,6 +18,7 @@ namespace CinemaApi.Entities
         public DbSet<Address> Addresses { get; set; }
         public DbSet<SeetReserving> SeetReservings { get; set; }
         public DbSet<ScreenPlay> ScreenPlays { get; set; }
+        public DbSet<AddressHasHalls> AddressesHasHalls { get; set; }
 
 
 
