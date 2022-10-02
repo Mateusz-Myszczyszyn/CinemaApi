@@ -25,9 +25,21 @@ builder.Services.AddDbContext<CinemaDbContext>(
     //.UseLazyLoadingProxies()
     .UseSqlServer(builder.Configuration.GetConnectionString("CinemaDbConnection")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAny", builder =>
+    {
+        builder.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+    });
+});
+
+
 
 var app = builder.Build();
 
+app.UseCors("AllowAny");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
