@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CinemaApi.Controllers
 {
     [ApiController]
-    [Route("api/address/{addressId}/cinemahalls")]
+    [Route("api/cinemahalls")]
     public class CinemaHallController : ControllerBase
     {
         private readonly ICinemaHallService _service;
@@ -16,29 +16,45 @@ namespace CinemaApi.Controllers
             _service = service;
         }
         [HttpGet]
-        public ActionResult<List<CinemaHallDto>> GetAll([FromRoute] int addressId)
+        public ActionResult<List<CinemaHallDto>> GetAll()
         {
 
-            var cinemaHalls = _service.GetAll(addressId);
+            var cinemaHalls = _service.GetAll();
 
             return Ok(cinemaHalls);
 
         }
 
         [HttpGet("{cinemaHallId}")]
-        public ActionResult<CinemaHallDto> GetById([FromRoute] int addressId, [FromRoute] int cinemaHallId)
+        public ActionResult<CinemaHallDto> GetById([FromRoute] int cinemaHallId)
         {
-            var cinemaHall = _service.GetById(addressId, cinemaHallId);
+            var cinemaHall = _service.GetById(cinemaHallId);
 
             return Ok(cinemaHall);
         }
 
         [HttpPost]
-        public ActionResult<int> Create([FromRoute] int addressId, [FromBody]CreateCinemaHallDto dto)
+        public ActionResult<int> Create([FromBody]CreateCinemaHallDto dto)
         {
-            var newCinemaHallId = _service.Create(addressId, dto);
+            var newCinemaHallId = _service.Create(dto);
 
-            return Created($"api/address/{addressId}/cinemahalls/{newCinemaHallId}", null);
+           return Created($"api/cinemahalls/{newCinemaHallId}", null);
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteAll()
+        {
+            _service.DeleteAll();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{cinemaHallId}")]
+        public ActionResult DeleteById([FromRoute] int cinemaHallId)
+        {
+            _service.DeleteById(cinemaHallId);
+
+            return NoContent();
         }
     }
 }
