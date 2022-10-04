@@ -21,7 +21,7 @@ namespace CinemaApi.Entities.Configurations
 
             builder.HasMany(c => c.SeatReservations)
                 .WithOne(s => s.HallSeats)
-                .HasForeignKey(s => s.HallSeatId).OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(s => s.HallSeatId).OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }
