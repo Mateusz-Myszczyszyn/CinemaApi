@@ -8,17 +8,14 @@ using System.Threading.Tasks;
 
 namespace CinemaApi.Entities.Configurations
 {
-    public class SeetReservingConfiguration : IEntityTypeConfiguration<SeetReserving>
+    public class SeetReservingConfiguration : IEntityTypeConfiguration<SeatReservation>
     {
-        public void Configure(EntityTypeBuilder<SeetReserving> builder)
+        public void Configure(EntityTypeBuilder<SeatReservation> builder)
         {
             builder.HasOne(u => u.User)
-                .WithMany(sr => sr.SeetReservings)
+                .WithMany(sr => sr.SeatReservations)
                 .HasForeignKey(u => u.UserId);
 
-            builder.HasOne(ch=>ch.CinemaHall)
-                .WithMany(sr=>sr.SeetReservings)
-                .HasForeignKey(ch=>ch.CinemaHallId);
 
             builder.Property(i => i.IsReserved).IsRequired().HasDefaultValue(false);
             builder.Property(i => i.Seat).IsRequired();

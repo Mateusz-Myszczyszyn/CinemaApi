@@ -29,21 +29,6 @@ namespace CinemaApi.Entities.Configurations
 
           );
 
-            builder.HasMany(a => a.Addresses)
-                .WithMany(a => a.CinemaHalls)
-                .UsingEntity<AddressHasHalls>(
-
-                a => a.HasOne(a => a.Address)
-                .WithMany()
-                .HasForeignKey(a => a.AddressId),
-
-                a => a.HasOne(a => a.CinemaHall)
-                .WithMany()
-                .HasForeignKey(a => a.CinemaHallId),
-
-                a => a.HasKey(a => a.Id)
-                );
-
             builder.Property(c => c.HallName).IsRequired();
 
               

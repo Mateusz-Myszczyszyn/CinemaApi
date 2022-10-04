@@ -11,8 +11,9 @@ namespace CinemaApi.Entities
         public int Id { get; set; }
         public string HallName { get; set; }
         public List<Movie> Movies { get; set; }
-        public List<SeetReserving> SeetReservings { get; set; }
-        public List<Address> Addresses { get; set; }
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
+        public List<HallSeats> HallSeats { get; set; }
 
 
     }
