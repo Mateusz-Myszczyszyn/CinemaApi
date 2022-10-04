@@ -17,31 +17,35 @@ namespace CinemaApi.Services
             _mapper = mapper;
         }
 
-        public List<CinemaHallDto> GetAll()
+        public List<CinemaHallDto> GetAll(int addressId)
         {
-            var premapCinemaHalls = _context.CinemaHalls.ToList();
 
-            var cinemaHalls = _mapper.Map<List<CinemaHallDto>>(premapCinemaHalls);
+            var address = GetAddressById(addressId);
+
+            var cinemaHalls = _mapper.Map<List<CinemaHallDto>>(address.CinemaHalls);
 
             if (!cinemaHalls.Any()) throw new NotFoundException("CinemaHalls not found");
 
             return cinemaHalls;
         }
 
-        public CinemaHallDto GetById(int cinemaHallId)
+        public CinemaHallDto GetById(int addressId,int cinemaHallId)
         {
 
-            var premapCinemaHall = _context.CinemaHalls.FirstOrDefault(c => c.Id == cinemaHallId);
+            var preMapcinemaHall = GetAddressById(addressId).CinemaHalls.FirstOrDefault(c=>c.Id==cinemaHallId);
 
-            var cinemaHall = _mapper.Map<CinemaHallDto>(premapCinemaHall);
+            var cinemaHall = _mapper.Map<CinemaHallDto>(preMapcinemaHall);
 
             if (cinemaHall is null) throw new NotFoundException("Specific hall does not exist");
 
             return cinemaHall;
         }
 
-        public int Create(CreateCinemaHallDto dto)
+        public int Create(int addressId, CreateCinemaHallDto dto)
         {
+
+            var premapHall = GetAddressById(addressId);
+
             var newCinemaHall = _mapper.Map<CinemaHall>(dto);
 
             if (newCinemaHall is null) throw new BadRequestException("Something went wrong with sending data");
@@ -52,9 +56,9 @@ namespace CinemaApi.Services
             return newCinemaHall.Id;
         }
 
-        public void DeleteById(int cinemaHallId)
+        public void DeleteById(int addressId,int cinemaHallId)
         {
-            var cinemaHallToDelete = _context.CinemaHalls.FirstOrDefault(c => c.Id == cinemaHallId);
+            var cinemaHallToDelete = GetAddressById(addressId).CinemaHalls.FirstOrDefault(c=>c.Id == cinemaHallId);
 
             if (cinemaHallToDelete is null) throw new NotFoundException($"The cinemahall{cinemaHallId} u want to delete does not exist or it was deleted");
 
@@ -62,14 +66,36 @@ namespace CinemaApi.Services
             _context.SaveChanges();
         }
 
-        public void DeleteAll()
+        public void DeleteAll(int addressId)
         {
-            var cinemaHallsToDelete = _context.CinemaHalls.ToList();
+            var cinemaHallsToDelete = GetAddressById(addressId).CinemaHalls.ToList();
 
             if (!cinemaHallsToDelete.Any()) throw new NotFoundException($"The cinemahalls  u want to delete do not exist or they were deleted");
 
             _context.CinemaHalls.RemoveRange(cinemaHallsToDelete);
             _context.SaveChanges();
+        }
+
+        public void Update(int addressId,int cinemaHallId, CreateCinemaHallDto dto)
+        {
+            var mapHall = _mapper.Map<CinemaHall>(dto);
+
+            var cinemaHalltoUpdate = GetAddressById(addressId).CinemaHalls.FirstOrDefault(a => a.Id == cinemaHallId);
+
+            if(cinemaHalltoUpdate is null) throw new NotFoundException($"The cinemahall{cinemaHallId} u want to update does not exist");
+
+            cinemaHalltoUpdate.HallName = dto.HallName;
+
+            _context.SaveChanges();
+        }
+
+        private Address GetAddressById(int addressId)
+        {
+            var address = _context.Addresses.FirstOrDefault(a => a.Id == addressId);
+
+            if (address is null) throw new NotFoundException($"Address with this id({addressId}) does not exist");
+
+            return address;
         }
         
     }

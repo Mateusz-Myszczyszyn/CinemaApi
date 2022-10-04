@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CinemaApi.Controllers
 {
     [ApiController]
-    [Route("api/cinemahalls")]
+    [Route("api/address/{addressId}/cinemahalls")]
     public class CinemaHallController : ControllerBase
     {
         private readonly ICinemaHallService _service;
@@ -16,45 +16,53 @@ namespace CinemaApi.Controllers
             _service = service;
         }
         [HttpGet]
-        public ActionResult<List<CinemaHallDto>> GetAll()
+        public ActionResult<List<CinemaHallDto>> GetAll([FromRoute]int addressId)
         {
 
-            var cinemaHalls = _service.GetAll();
+            var cinemaHalls = _service.GetAll(addressId);
 
             return Ok(cinemaHalls);
 
         }
 
         [HttpGet("{cinemaHallId}")]
-        public ActionResult<CinemaHallDto> GetById([FromRoute] int cinemaHallId)
+        public ActionResult<CinemaHallDto> GetById([FromRoute] int addressId,[FromRoute] int cinemaHallId)
         {
-            var cinemaHall = _service.GetById(cinemaHallId);
+            var cinemaHall = _service.GetById(addressId,cinemaHallId);
 
             return Ok(cinemaHall);
         }
 
         [HttpPost]
-        public ActionResult<int> Create([FromBody]CreateCinemaHallDto dto)
+        public ActionResult<int> Create([FromRoute] int addressId,[FromBody]CreateCinemaHallDto dto)
         {
-            var newCinemaHallId = _service.Create(dto);
+            var newCinemaHallId = _service.Create(addressId,dto);
 
            return Created($"api/cinemahalls/{newCinemaHallId}", null);
         }
 
         [HttpDelete]
-        public ActionResult DeleteAll()
+        public ActionResult DeleteAll([FromRoute] int addressId)
         {
-            _service.DeleteAll();
+            _service.DeleteAll(addressId);
 
             return NoContent();
         }
 
         [HttpDelete("{cinemaHallId}")]
-        public ActionResult DeleteById([FromRoute] int cinemaHallId)
+        public ActionResult DeleteById([FromRoute] int addressId,[FromRoute] int cinemaHallId)
         {
-            _service.DeleteById(cinemaHallId);
+            _service.DeleteById(addressId,cinemaHallId);
 
             return NoContent();
+        }
+
+        [HttpPut("{cinemaHallId}")]
+        public ActionResult Update([FromRoute] int addressId,[FromRoute] int cinemaHallId, [FromBody] CreateCinemaHallDto dto)
+        {
+            _service.Update(addressId, cinemaHallId, dto);
+
+            return Ok();
         }
     }
 }
