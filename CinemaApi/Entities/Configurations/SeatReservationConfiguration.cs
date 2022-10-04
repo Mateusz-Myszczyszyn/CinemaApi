@@ -13,6 +13,8 @@ namespace CinemaApi.Entities.Configurations
 
 
             builder.Property(i => i.IsReserved).IsRequired().HasDefaultValue(false);
+            builder.Property(i => i.Payed).IsRequired().HasDefaultValue(false);
+            builder.Property(i => i.Active).IsRequired().HasDefaultValue(false);
 
             builder.HasKey(s => s.Id);
             

@@ -4,6 +4,7 @@ using CinemaApi.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CinemaApi.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221004133733_entities_relation_fixes")]
+    partial class entities_relation_fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,49 +247,6 @@ namespace CinemaApi.Migrations
                     b.ToTable("ScreenPlays");
                 });
 
-            modelBuilder.Entity("CinemaApi.Entities.SeatReservation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("HallSeatId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsReserved")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("Payed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("ScreenPlayId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HallSeatId");
-
-                    b.HasIndex("ScreenPlayId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SeatReservations");
-                });
-
             modelBuilder.Entity("CinemaApi.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -388,33 +347,6 @@ namespace CinemaApi.Migrations
                     b.Navigation("MoviePerforming");
                 });
 
-            modelBuilder.Entity("CinemaApi.Entities.SeatReservation", b =>
-                {
-                    b.HasOne("CinemaApi.Entities.HallSeats", "HallSeats")
-                        .WithMany("SeatReservations")
-                        .HasForeignKey("HallSeatId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CinemaApi.Entities.ScreenPlay", "ScreenPlay")
-                        .WithMany("SeatReservations")
-                        .HasForeignKey("ScreenPlayId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CinemaApi.Entities.User", "User")
-                        .WithMany("SeatReservations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("HallSeats");
-
-                    b.Navigation("ScreenPlay");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("CinemaApi.Entities.User", b =>
                 {
                     b.HasOne("CinemaApi.Entities.Role", "Role")
@@ -441,24 +373,9 @@ namespace CinemaApi.Migrations
                     b.Navigation("HallSeats");
                 });
 
-            modelBuilder.Entity("CinemaApi.Entities.HallSeats", b =>
-                {
-                    b.Navigation("SeatReservations");
-                });
-
             modelBuilder.Entity("CinemaApi.Entities.MoviePerforming", b =>
                 {
                     b.Navigation("ScreenPlays");
-                });
-
-            modelBuilder.Entity("CinemaApi.Entities.ScreenPlay", b =>
-                {
-                    b.Navigation("SeatReservations");
-                });
-
-            modelBuilder.Entity("CinemaApi.Entities.User", b =>
-                {
-                    b.Navigation("SeatReservations");
                 });
 #pragma warning restore 612, 618
         }

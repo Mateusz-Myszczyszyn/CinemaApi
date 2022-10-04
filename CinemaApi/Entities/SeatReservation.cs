@@ -13,7 +13,7 @@ namespace CinemaApi.Entities
         public bool Payed { get; set; }
         public bool Active { get; set; }
         public int HallSeatId { get; set; }
-        public HallSeats HallSeat { get; set; }
+        public HallSeats HallSeats { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
         public int ScreenPlayId { get; set; }
