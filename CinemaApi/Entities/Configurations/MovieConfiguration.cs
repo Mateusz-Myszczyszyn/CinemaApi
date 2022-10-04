@@ -15,6 +15,7 @@ namespace CinemaApi.Entities.Configurations
             builder.Property(m => m.Title).IsRequired().HasMaxLength(20);
             builder.Property(m => m.Director).IsRequired().HasMaxLength(25);
             builder.Property(m => m.Description).HasMaxLength(100);
+            builder.Property(m => m.Cast).HasMaxLength(50);
 
             builder.Property(m => m.Premiere).HasColumnType("Date");
         }

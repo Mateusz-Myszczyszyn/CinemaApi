@@ -12,5 +12,6 @@ namespace CinemaApi.Entities
         public DateTime ShowTime { get; set; }
         public MoviePerforming MoviePerforming { get; set; }
         public int MoviePerformingId { get; set; }
+        public List<SeatReservation> SeatReservations { get; set; }
     }
 }

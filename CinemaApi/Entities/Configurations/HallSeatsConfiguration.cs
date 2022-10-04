@@ -18,6 +18,10 @@ namespace CinemaApi.Entities.Configurations
 
             builder.Property(c => c.Seat).IsRequired();
             builder.Property(c => c.Row).IsRequired();
+
+            builder.HasMany(c => c.SeatReservations)
+                .WithOne(s => s.HallSeat)
+                .HasForeignKey(s => s.HallSeatId);
         }
     }
 }

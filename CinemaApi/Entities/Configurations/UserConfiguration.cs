@@ -20,6 +20,10 @@ namespace CinemaApi.Entities.Configurations
             builder.HasOne(r => r.Role)
                 .WithMany()
                 .HasForeignKey(r => r.RoleId);
+
+            builder.HasMany(u => u.SeatReservations)
+                .WithOne(u => u.User)
+                .HasForeignKey(u => u.UserId);
         }
     }
 }

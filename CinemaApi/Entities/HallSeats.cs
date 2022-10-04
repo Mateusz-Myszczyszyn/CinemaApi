@@ -13,5 +13,6 @@ namespace CinemaApi.Entities
         public string Seat { get; set; }
         public CinemaHall CinemaHall { get; set; }
         public int CinemaHallId { get; set; }
+        public List<SeatReservation> SeatReservations { get; set; }
     }
 }
