@@ -29,6 +29,10 @@ namespace CinemaApi.Dtos.MappingProfiles
                 
 
             CreateMap<CreateCinemaHallDto, CinemaHall>();
+
+            CreateMap<HallSeats,HallSeatsDto>();
+
+            CreateMap<CreateHallSeatsDto,HallSeats>();
             
         }
     }
