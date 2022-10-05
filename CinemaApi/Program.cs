@@ -21,6 +21,7 @@ builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICinemaHallService, CinemaHallService>();
 builder.Services.AddScoped<IHallSeatService, HallSeatService>();
+builder.Services.AddScoped<IMoviePerformingService, MoviePerformingService>();
 builder.Services.AddDbContext<CinemaDbContext>(
     options => options
     //.UseLazyLoadingProxies()
