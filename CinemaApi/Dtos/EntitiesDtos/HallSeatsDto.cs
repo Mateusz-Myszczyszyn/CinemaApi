@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CinemaApi.Dtos
+namespace CinemaApi.Dtos.EntitiesDtos
 {
-    public class CreateHallSeatsDto
+    public class HallSeatsDto
     {
+        public int Id { get; set; }
         public string Row { get; set; }
         public string Seat { get; set; }
     }

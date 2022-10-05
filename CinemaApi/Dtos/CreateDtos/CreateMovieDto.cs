@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace CinemaApi.Dtos
+namespace CinemaApi.Dtos.CreateDtos
 {
-    public class MovieDto
+    public class CreateMovieDto
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(20)]
         public string Title { get; set; }

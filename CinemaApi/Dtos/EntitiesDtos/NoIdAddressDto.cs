@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CinemaApi.Dtos
+namespace CinemaApi.Dtos.EntitiesDtos
 {
     public class NoIdAddressDto
     {

@@ -5,15 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CinemaApi.Dtos
+namespace CinemaApi.Dtos.EntitiesDtos
 {
-    public class CreateCinemaDto
+    public class CinemaDto
     {
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public string Owner { get; set; }
+
         public int WorkersQuantity { get; set; }
 
+        public List<NoIdAddressDto> Addresses { get; set; }
     }
 }

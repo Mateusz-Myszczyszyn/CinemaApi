@@ -1,19 +1,15 @@
-﻿using CinemaApi.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CinemaApi.Dtos
+namespace CinemaApi.Dtos.CreateDtos
 {
-    public class CinemaHallDto
+    public class CreateCinemaHallDto
     {
-        public int Id { get; set; }
         [Required]
         public string HallName { get; set; }
-        
-        
     }
 }
