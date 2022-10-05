@@ -1,4 +1,5 @@
-﻿using CinemaApi.Dtos;
+﻿using CinemaApi.Dtos.CreateDtos;
+using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Entities;
 
 namespace CinemaApi.Services

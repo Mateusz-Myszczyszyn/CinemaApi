@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using CinemaApi.Dtos;
+using CinemaApi.Dtos.CreateDtos;
+using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +49,8 @@ namespace CinemaApi.Services
 
             var newCinemaHall = _mapper.Map<CinemaHall>(dto);
 
+            newCinemaHall.AddressId = premapHall.Id;
+
             if (newCinemaHall is null) throw new BadRequestException("Something went wrong with sending data");
 
             _context.CinemaHalls.Add(newCinemaHall);
@@ -91,8 +94,10 @@ namespace CinemaApi.Services
 
         private Address GetAddressById(int addressId)
         {
-            var address = _context.Addresses.FirstOrDefault(a => a.Id == addressId);
-
+            var address = _context.Addresses
+                .Include(a => a.CinemaHalls)
+                .FirstOrDefault(c => c.Id == addressId);
+                
             if (address is null) throw new NotFoundException($"Address with this id({addressId}) does not exist");
 
             return address;
