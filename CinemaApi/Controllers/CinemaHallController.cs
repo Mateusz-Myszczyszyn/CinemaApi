@@ -1,4 +1,5 @@
-﻿using CinemaApi.Dtos;
+﻿using CinemaApi.Dtos.CreateDtos;
+using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Entities;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace CinemaApi.Controllers
         {
             var newCinemaHallId = _service.Create(addressId,dto);
 
-           return Created($"api/cinemahalls/{newCinemaHallId}", null);
+           return Created($"api/address/{addressId}/cinemahalls/{newCinemaHallId}", null);
         }
 
         [HttpDelete]

@@ -1,4 +1,5 @@
-﻿using CinemaApi.Dtos;
+﻿using CinemaApi.Dtos.CreateDtos;
+using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
