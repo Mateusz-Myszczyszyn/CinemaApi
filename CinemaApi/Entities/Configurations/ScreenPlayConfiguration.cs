@@ -19,7 +19,7 @@ namespace CinemaApi.Entities.Configurations
 
             builder.HasMany(mp => mp.SeatReservations)
                 .WithOne(mp => mp.ScreenPlay)
-                .HasForeignKey(mp => mp.ScreenPlayId).OnDelete(DeleteBehavior.ClientCascade);
+                .HasForeignKey(mp => mp.ScreenPlayId).OnDelete(DeleteBehavior.NoAction);
                 
         }
     }
