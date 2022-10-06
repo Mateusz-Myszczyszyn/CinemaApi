@@ -5,6 +5,7 @@ using CinemaApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace CinemaApi.Controllers
 {
     [Route("api/movieperforming")]
     [ApiController]
-    public class MoviePerformingController :ControllerBase
+    public class MoviePerformingController : ControllerBase
     {
         private readonly IMoviePerformingService _service;
 
@@ -30,7 +31,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet("{moviePerfId}")]
-        public ActionResult<MoviePerformingDto> GetById([FromRoute]int moviePerfId)
+        public ActionResult<MoviePerformingDto> GetById([FromRoute] int moviePerfId)
         {
             var moviePerf = _service.GetById(moviePerfId);
 
@@ -43,6 +44,22 @@ namespace CinemaApi.Controllers
             var newMoviePerfId = _service.Create(dto);
 
             return Created($"api/movieperforming/{newMoviePerfId}", null);
+        }
+
+        [HttpDelete("{moviePerfId}")]
+        public ActionResult DeleteById([FromRoute]int moviePerfId)
+        {
+            _service.DeleteById(moviePerfId);
+
+            return NoContent();
+        }
+
+        [HttpPut("{moviePerfId}")]
+        public ActionResult Update([FromRoute] int moviePerfId, [FromBody] CreateMoviePerformanceDto dto)
+        {
+            _service.Update(moviePerfId, dto);
+
+            return Ok();
         }
     }
 }

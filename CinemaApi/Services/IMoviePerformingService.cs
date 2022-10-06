@@ -9,5 +9,7 @@ namespace CinemaApi.Services
         List<MoviePerformingDto> GetAll();
         MoviePerformingDto GetById(int moviePerfId);
         int Create(CreateMoviePerformanceDto dto);
+        void DeleteById(int moviePerfId);
+        void Update(int moviePerfId, CreateMoviePerformanceDto dto);
     }
 }

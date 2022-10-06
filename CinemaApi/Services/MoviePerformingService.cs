@@ -62,5 +62,37 @@ namespace CinemaApi.Services
 
             return createMoviePref.Id;
         }
+
+        public void DeleteById(int moviePerfId)
+        {
+            var moviePerf = _context.MoviePerformings.FirstOrDefault(c => c.Id == moviePerfId);
+
+            if (moviePerf is null) throw new NotFoundException($"MoviePerformence record with id = {moviePerfId} does not exist");
+
+            _context.MoviePerformings.Remove(moviePerf);
+            _context.SaveChanges();
+        }
+        
+        public void Update(int moviePerfId,CreateMoviePerformanceDto dto)
+        {
+            var mapped = _mapper.Map<MoviePerforming>(dto);
+
+            var MoviePerfToUpdate = _context.MoviePerformings.FirstOrDefault(c => c.Id == moviePerfId);
+
+            var checkifMovie = _context.Movies.FirstOrDefault(c => c.Id == mapped.MovieId);
+            var checkifCinemaHall = _context.CinemaHalls.FirstOrDefault(c => c.Id == mapped.CinemaHallId);
+
+            if (MoviePerfToUpdate is null) throw new NotFoundException($"MoviePerformence record with id = {moviePerfId} does not exist");
+
+            if (checkifMovie is null) throw new NotFoundException($"The movie with id = {mapped.MovieId} does not exist");
+
+            if (checkifCinemaHall is null) throw new NotFoundException($"The cinema hall with id= {mapped.CinemaHallId} does not exist");
+
+            MoviePerfToUpdate.MovieId = mapped.MovieId;
+            MoviePerfToUpdate.CinemaHallId = mapped.CinemaHallId;
+
+            _context.SaveChanges();
+        }
+        
     }
 }
