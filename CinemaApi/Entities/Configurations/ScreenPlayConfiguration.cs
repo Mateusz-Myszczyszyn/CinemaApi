@@ -20,6 +20,9 @@ namespace CinemaApi.Entities.Configurations
             builder.HasMany(mp => mp.SeatReservations)
                 .WithOne(mp => mp.ScreenPlay)
                 .HasForeignKey(mp => mp.ScreenPlayId).OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(c => c.DigitalView).IsRequired().HasDefaultValue("2D");
+            builder.Property(c => c.ShowTime).IsRequired();
                 
         }
     }

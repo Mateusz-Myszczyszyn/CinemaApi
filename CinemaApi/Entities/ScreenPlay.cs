@@ -10,6 +10,7 @@ namespace CinemaApi.Entities
     {
         public int Id { get; set; }
         public DateTime ShowTime { get; set; }
+        public string DigitalView { get; set; }
         public MoviePerforming MoviePerforming { get; set; }
         public int MoviePerformingId { get; set; }
         public List<SeatReservation> SeatReservations { get; set; }
