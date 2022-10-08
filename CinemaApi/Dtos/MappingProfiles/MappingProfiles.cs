@@ -12,38 +12,47 @@ namespace CinemaApi.Dtos.MappingProfiles
             CreateMap<CreateCinemaDto, Cinema>();
 
             CreateMap<Address, AddressDto>()
-                .ForMember(a=>a.CinemaName,a=>a.MapFrom(a=>a.Cinema.Name));
+                .ForMember(a => a.CinemaName, a => a.MapFrom(a => a.Cinema.Name));
 
             CreateMap<Address, NoIdAddressDto>();
             //CreateMap<AddressDto, Address>();
 
-            CreateMap<CreateAddressDto,Address>();
+            CreateMap<CreateAddressDto, Address>();
 
             CreateMap<Cinema, CinemaDto>();
 
             CreateMap<CinemaDto, Cinema>();
 
             CreateMap<Movie, MovieDto>();
-                
+
             CreateMap<CreateMovieDto, Movie>();
 
             CreateMap<CinemaHall, CinemaHallDto>();
-                
+
 
             CreateMap<CreateCinemaHallDto, CinemaHall>();
 
-            CreateMap<HallSeats,HallSeatsDto>();
+            CreateMap<HallSeats, HallSeatsDto>();
 
-            CreateMap<CreateHallSeatsDto,HallSeats>();
+            CreateMap<CreateHallSeatsDto, HallSeats>();
 
-            CreateMap<MoviePerforming, MoviePerformingDto>()
-                .ForMember(m=>m.MovieId, c=>c.MapFrom(c=>c.MovieId))
-                .ForMember(m => m.Id, c => c.MapFrom(c => c.Id))
-                .ForMember(m => m.CinemaHallId, c => c.MapFrom(c => c.CinemaHallId));
+            CreateMap<MoviePerforming, MoviePerformingDto>();
 
-            CreateMap<CreateMoviePerformanceDto, MoviePerforming>()
-                .ForMember(c => c.CinemaHallId, c => c.MapFrom(c => c.CinemaHallId))
-                .ForMember(c => c.MovieId, c => c.MapFrom(c => c.MovieId));
+            CreateMap<CreateMoviePerformanceDto, MoviePerforming>();
+
+            CreateMap<ScreenPlay, ScreenPlayDto>()
+                .ForMember(c=>c.ShowTime,c=>c.MapFrom(c=>c.ShowTime))
+                .ForMember(c=>c.MoviePerformingDto,c=>c.MapFrom(c=>c.MoviePerforming))
+                .ForMember(c=>c.Id,c=>c.MapFrom(c=>c.Id));
+
+            CreateMap<CreateScreenPlayDto, ScreenPlay>()
+                .ForMember(c => c.ShowTime, c => c.MapFrom(c => c.ShowTime))
+                .ForMember(c => c.MoviePerformingId, c => c.MapFrom(c => c.MoviePerformingId));
+
+            CreateMap<SeatReservation, SeatReservationDto>();
+
+            CreateMap<CreateSeatReservationDto, SeatReservation>();
         }
+
     }
 }
