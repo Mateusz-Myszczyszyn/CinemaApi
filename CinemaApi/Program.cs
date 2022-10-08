@@ -1,5 +1,6 @@
 using CinemaApi;
 using CinemaApi.Entities;
+using CinemaApi.Entities.Configurations;
 using CinemaApi.Middleware;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Http.Json;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICinemaHallService, CinemaHallService>();
 builder.Services.AddScoped<IHallSeatService, HallSeatService>();
 builder.Services.AddScoped<IMoviePerformingService, MoviePerformingService>();
+builder.Services.AddScoped<IScreenPlayService, ScreenPlayService>();
 builder.Services.AddDbContext<CinemaDbContext>(
     options => options
     //.UseLazyLoadingProxies()
