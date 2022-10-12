@@ -12,7 +12,7 @@ namespace CinemaApi.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(u => u.Password).IsRequired();
+            builder.Property(u => u.PasswordHash).IsRequired();
             builder.Property(u => u.Name).IsRequired();
             builder.Property(u => u.LastName).IsRequired();
             builder.Property(u => u.Email).IsRequired();
