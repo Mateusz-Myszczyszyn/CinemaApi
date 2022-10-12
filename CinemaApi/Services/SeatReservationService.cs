@@ -3,6 +3,8 @@ using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace CinemaApi.Services
 {
-    public class SeatReservationService
+    public class SeatReservationService : ISeatReservationService
     {
         private readonly CinemaDbContext _context;
         private readonly IMapper _mapper;
 
-        public SeatReservationService(CinemaDbContext context,IMapper mapper)
+        public SeatReservationService(CinemaDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -72,6 +74,29 @@ namespace CinemaApi.Services
 
             _context.Remove(reservationToDelete);
             _context.SaveChanges();
+        }
+
+        public void Update(int seatReservationId, UpdateSeatReservationDto dto)
+        {
+            var mapped = _mapper.Map<SeatReservation>(dto);
+
+            var toUpdate = _context.SeatReservations.FirstOrDefault(c => c.Id == seatReservationId);
+
+
+            var checkIfSeat = _context.SeatReservations.FirstOrDefault(c => c.HallSeatId == dto.HallSeatId);
+            var checkIfScrPlay = _context.SeatReservations.FirstOrDefault(c => c.ScreenPlayId == dto.ScreenPlayId);
+
+            if (toUpdate is null) throw new NotFoundException($"Reservation with id = {seatReservationId} does not exist");
+            if (checkIfSeat is null) throw new NotFoundException($"Probably seat with id = {dto.HallSeatId} does not exist or is reserved");
+            if (checkIfScrPlay is null) throw new NotFoundException($"There is no playing movie hours with this id = {dto.ScreenPlayId}");
+
+            toUpdate.ScreenPlayId = mapped.ScreenPlayId;
+            toUpdate.IsReserved = mapped.IsReserved;
+            toUpdate.Active = mapped.Active;
+            toUpdate.HallSeatId = mapped.HallSeatId;
+
+            _context.SaveChanges();
+
         }
 
     }
