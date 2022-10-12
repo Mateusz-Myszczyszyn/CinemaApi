@@ -35,6 +35,12 @@ namespace CinemaApi.Dtos.Validators
                     }
                 });
 
+            RuleFor(c => c.Name)
+                .NotEmpty();
+
+            RuleFor(c => c.LastName)
+                .NotEmpty();
+
             
         }
     }
