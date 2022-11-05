@@ -12,6 +12,8 @@ namespace CinemaApi.Dtos.CreateDtos
         [Required]
         [MaxLength(25)]
         public string Director { get; set; }
+        public string Cast { get; set; }
         public DateTime? Premiere { get; set; }
+        public int PEGI { get; set; }
     }
 }
