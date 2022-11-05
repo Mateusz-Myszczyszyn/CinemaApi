@@ -60,12 +60,8 @@ namespace CinemaApi.Services
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                 new Claim(ClaimTypes.Name,$"{user.Name} {user.LastName}"),
                 new Claim(ClaimTypes.Role,$"{user.Role.Name}"),
+                new Claim(ClaimTypes.DateOfBirth,user.DateOfBirth.ToString("dd-MM-yyyy"))
             };
-
-            if (string.IsNullOrEmpty(user.DateOfBirth.Value.ToString("yyyy-MM-dd")))
-            {
-                claims.Add(new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
-            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -3,6 +3,7 @@ using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,11 +18,15 @@ namespace CinemaApi.Services
     {
         private readonly CinemaDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
+        private readonly IAuthorizationService _service;
 
-        public CinemaService(CinemaDbContext context,IMapper mapper)
+        public CinemaService(CinemaDbContext context,IMapper mapper,ILogger<CinemaService> logger,IAuthorizationService service)
         {
             _context = context;
             _mapper = mapper;
+            _logger = logger;
+            _service = service;
         }
 
         public  List<CinemaDto> GetAll()
@@ -52,6 +57,8 @@ namespace CinemaApi.Services
 
         public void Delete(int id)
         {
+            _logger.LogInformation($"Delete Action with Cinema with id:{id} Invoked");
+
             var cinema = _context.Cinemas.FirstOrDefault(c => c.Id == id);
 
             if (cinema is null) throw new NotFoundException("Specific cinema not found");
