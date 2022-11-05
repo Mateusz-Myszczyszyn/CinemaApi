@@ -1,7 +1,15 @@
 using CinemaApi;
+using CinemaApi.Authorization;
+using CinemaApi.Dtos.CreateDtos;
+using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Validators;
 using CinemaApi.Entities;
 using CinemaApi.Middleware;
 using CinemaApi.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -29,8 +37,14 @@ builder.Services.AddAuthentication(option =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
     };
 });
-builder.Services.AddControllers().AddJsonOptions(x =>x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+/*builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UnderAge",)
+});*/
+builder.Services.AddScoped<IAuthorizationHandler, AgeForMovieRequirementHandler>();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -43,6 +57,11 @@ builder.Services.AddScoped<IHallSeatService, HallSeatService>();
 builder.Services.AddScoped<IMoviePerformingService, MoviePerformingService>();
 builder.Services.AddScoped<IScreenPlayService, ScreenPlayService>();
 builder.Services.AddScoped<ISeatReservationService, SeatReservationService>();
+builder.Services.AddScoped<IUserAccountService, UserAccountService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+builder.Services.AddScoped<IValidator<LoginUserDto>, LoginUserDtoValidator>();
+builder.Services.AddScoped<IValidator<CreateMovieDto>, CreateMovieDtoValidator>();
 builder.Services.AddDbContext<CinemaDbContext>(
     options => options
     //.UseLazyLoadingProxies()
