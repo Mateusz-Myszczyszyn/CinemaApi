@@ -1,6 +1,7 @@
 ﻿using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace CinemaApi.Controllers
             _service = service;
         }
         [HttpGet]
+        [Authorize(Roles ="User")]
         public ActionResult<List<HallSeatsDto>> GetAll([FromRoute]int cinemaHallId)
         {
             var hallSeats = _service.GetAll(cinemaHallId);
@@ -28,15 +30,17 @@ namespace CinemaApi.Controllers
             return Ok(hallSeats);
         }
 
-        [HttpGet("{hallSeatId}")]
+       /* [HttpGet("{hallSeatId}")]
+        [Authorize(Roles = "User")]
         public ActionResult<HallSeatsDto> GetById([FromRoute] int cinemaHallId, [FromRoute] int hallSeatId)
         {
             var hallSeat = _service.GetById(cinemaHallId, hallSeatId);
 
             return Ok(hallSeat);
-        }
+        }*/
 
         [HttpPost]
+        [Authorize(Roles ="Admin,Worker,Menager")]
         public ActionResult<int> Create([FromRoute] int cinemaHallId, [FromBody]CreateHallSeatsDto dto)
         {
             var newSeatId = _service.Create(cinemaHallId, dto);
@@ -45,6 +49,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,Worker,Menager")]
         public ActionResult DeleteAll([FromRoute] int cinemaHallId)
         {
             _service.DeleteAll(cinemaHallId);
@@ -53,6 +58,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpDelete("{hallSeatId}")]
+        [Authorize(Roles = "Admin,Worker,Menager")]
         public ActionResult DeleteById([FromRoute] int cinemaHallId, [FromRoute] int hallSeatId)
         {
             _service.DeleteById(cinemaHallId,hallSeatId);
@@ -61,6 +67,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpPut("{hallSeatId}")]
+        [Authorize(Roles = "Admin,Worker,Menager")]
         public ActionResult Update([FromRoute] int cinemaHallId, [FromRoute] int hallSeatId, [FromBody] CreateHallSeatsDto dto)
         {
             _service.Update(cinemaHallId, hallSeatId, dto);

@@ -2,6 +2,7 @@
 using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Entities;
 using CinemaApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaApi.Controllers
@@ -17,6 +18,7 @@ namespace CinemaApi.Controllers
             _service = service;
         }
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<List<AddressDto>> GetAll([FromRoute] int cinemaId)
         {
             var Addresses = _service.GetAll(cinemaId);
@@ -25,6 +27,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet("{addressId}")]
+        [AllowAnonymous]
         public ActionResult<AddressDto> GetById([FromRoute] int cinemaId, [FromRoute] int addressId)
         {
             var specificAddress = _service.GetById(cinemaId, addressId);
@@ -33,6 +36,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Menager,Admin")]
         public ActionResult Create([FromRoute] int cinemaId, [FromBody] CreateAddressDto dto)
         {
             var newAddressId = _service.Create(cinemaId, dto);
@@ -41,6 +45,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpDelete("{addressId}")]
+        [Authorize(Roles = "Menager,Admin")]
         public ActionResult DeleteById([FromRoute] int cinemaId, [FromRoute] int addressId)
         {
             _service.DeleteById(cinemaId, addressId);
@@ -49,6 +54,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Menager,Admin")]
         public ActionResult DeleteAll([FromRoute] int cinemaId)
         {
             _service.DeleteAll(cinemaId);
@@ -57,6 +63,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpPut("{addressId}")]
+        [Authorize(Roles = "Menager,Admin")]
         public ActionResult Update([FromRoute] int cinemaId, [FromRoute] int addressId, [FromBody] CreateAddressDto dto)
         {
             _service.Update(cinemaId, addressId, dto);

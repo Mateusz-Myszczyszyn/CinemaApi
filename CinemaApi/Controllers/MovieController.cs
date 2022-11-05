@@ -2,6 +2,7 @@
 using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Entities;
 using CinemaApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<List<MovieDto>> GetAll()
         {
             var movies = _service.GetAll();
@@ -31,6 +33,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet("{movieId}")]
+        [AllowAnonymous]
         public ActionResult<MovieDto> GetById([FromRoute]int movieId)
         {
             var movie = _service.GetById(movieId);
@@ -38,6 +41,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles="Admin,Menager,Worker")]
         public ActionResult DeleteAll()
         {
             _service.DeleteAll();
@@ -46,6 +50,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpDelete("{movieId}")]
+        [Authorize(Roles = "Admin,Menager,Worker")]
         public ActionResult DeleteById([FromRoute]int movieId)
         {
             _service.DeleteById(movieId);
@@ -54,6 +59,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Menager,Worker")]
         public ActionResult<int> Create([FromBody]CreateMovieDto dto)
         {
             var createdMovieId = _service.Create(dto);
@@ -62,6 +68,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpPut("{movieId}")]
+        [Authorize(Roles = "Admin,Menager,Worker")]
         public ActionResult Update([FromBody] CreateMovieDto dto, [FromRoute] int movieId)
         {
             _service.Update(movieId, dto);

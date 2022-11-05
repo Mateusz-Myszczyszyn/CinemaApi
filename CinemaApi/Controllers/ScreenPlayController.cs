@@ -1,6 +1,7 @@
 ﻿using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
 using CinemaApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<List<ScreenPlayDto>> GetAll()
         {
             var screenPlays = _service.GetAll();
@@ -31,6 +33,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpGet("{screenPlayId}")]
+        [AllowAnonymous]
         public ActionResult<ScreenPlayDto> GetById([FromRoute]int screenPlayId)
         {
             var screenPlay = _service.GetById(screenPlayId);
@@ -39,6 +42,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Worker,Admin,Menager")]
         public ActionResult<int> Create([FromBody]CreateScreenPlayDto dto)
         {
             var createdScrPlayId = _service.Create(dto);
@@ -47,6 +51,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpPut("{screenPlayId}")]
+        [Authorize(Roles = "Worker,Admin,Menager")]
         public ActionResult Update([FromRoute] int screenPlayId, [FromBody] CreateScreenPlayDto dto)
         {
             _service.Update(screenPlayId, dto);
@@ -55,6 +60,7 @@ namespace CinemaApi.Controllers
         }
 
         [HttpDelete("{screenPlayId}")]
+        [Authorize(Roles = "Worker,Admin,Menager")]
         public ActionResult DeleteById([FromRoute]int screenPlayId)
         {
             _service.DeleteById(screenPlayId);
