@@ -15,6 +15,7 @@ namespace CinemaApi.Entities
         public string Description { get; set; }
         public string Director { get; set; }
         public string Cast { get; set; }
+        public int PEGI { get;set; }
         public DateTime? Premiere { get; set; }
         public List<CinemaHall> CinemaHalls { get; set; }
     }
