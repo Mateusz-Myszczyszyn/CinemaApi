@@ -2,6 +2,7 @@ using CinemaApi;
 using CinemaApi.Authorization;
 using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Dtos.Validators;
 using CinemaApi.Entities;
 using CinemaApi.Middleware;
@@ -58,10 +59,15 @@ builder.Services.AddScoped<IMoviePerformingService, MoviePerformingService>();
 builder.Services.AddScoped<IScreenPlayService, ScreenPlayService>();
 builder.Services.AddScoped<ISeatReservationService, SeatReservationService>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
+builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddScoped<IValidator<LoginUserDto>, LoginUserDtoValidator>();
 builder.Services.AddScoped<IValidator<CreateMovieDto>, CreateMovieDtoValidator>();
+builder.Services.AddScoped<IValidator<AddressQuery>, AddressQueryValidator>();
+builder.Services.AddScoped<IValidator<MovieQuery>, MovieQueryValidator>();
+builder.Services.AddScoped<IValidator<MoviePerformingQuery>, MoviePerformingQueryValidator>();
+
 builder.Services.AddDbContext<CinemaDbContext>(
     options => options
     //.UseLazyLoadingProxies()
