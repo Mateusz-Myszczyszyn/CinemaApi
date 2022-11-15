@@ -1,5 +1,6 @@
 ﻿using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Entities;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -25,9 +26,9 @@ namespace CinemaApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<MovieDto>> GetAll()
+        public ActionResult<List<MovieDto>> GetAll([FromQuery]MovieQuery query)
         {
-            var movies = _service.GetAll();
+            var movies = _service.GetAll(query);
 
             return Ok(movies);
         }

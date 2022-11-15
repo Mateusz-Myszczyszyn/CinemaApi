@@ -1,5 +1,6 @@
 ﻿using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Entities;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -19,9 +20,9 @@ namespace CinemaApi.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<AddressDto>> GetAll([FromRoute] int cinemaId)
+        public ActionResult<IEnumerable<AddressDto>> GetAll([FromRoute] int cinemaId, [FromQuery]AddressQuery query)
         {
-            var Addresses = _service.GetAll(cinemaId);
+            var Addresses = _service.GetAll(cinemaId,query);
 
             return Ok(Addresses);
         }

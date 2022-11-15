@@ -1,5 +1,6 @@
 ﻿using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +26,9 @@ namespace CinemaApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<ScreenPlayDto>> GetAll()
+        public ActionResult<IEnumerable<ScreenPlayDto>> GetAll([FromQuery] ScreenPlayQuery query)
         {
-            var screenPlays = _service.GetAll();
+            var screenPlays = _service.GetAll(query);
 
             return Ok(screenPlays);
         }
