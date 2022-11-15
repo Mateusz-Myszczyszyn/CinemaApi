@@ -9,7 +9,7 @@ namespace CinemaApi.Dtos.EntitiesDtos
     public class MoviePerformingDto
     {
         public int Id { get; set; }
-        public int MovieId { get; set; }
-        public int CinemaHallId { get; set; }
+        public string Title { get; set; }
+        public string HallName { get; set; }
     }
 }

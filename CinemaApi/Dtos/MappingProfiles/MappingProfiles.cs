@@ -36,7 +36,9 @@ namespace CinemaApi.Dtos.MappingProfiles
 
             CreateMap<CreateHallSeatsDto, HallSeats>();
 
-            CreateMap<MoviePerforming, MoviePerformingDto>();
+            CreateMap<MoviePerforming, MoviePerformingDto>()
+                .ForMember(c=>c.Title,c=>c.MapFrom(c=>c.Movie.Title))
+                .ForMember(c=>c.HallName,c=>c.MapFrom(c=>c.CinemaHall.HallName));
 
             CreateMap<CreateMoviePerformanceDto, MoviePerforming>();
 
