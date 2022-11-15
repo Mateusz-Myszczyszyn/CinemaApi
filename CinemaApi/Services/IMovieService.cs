@@ -1,5 +1,6 @@
 ﻿using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 
 namespace CinemaApi.Services
 {
@@ -8,7 +9,7 @@ namespace CinemaApi.Services
         int Create(CreateMovieDto dto);
         void DeleteAll();
         void DeleteById(int movieId);
-        List<MovieDto> GetAll();
+        PagedResult<MovieDto> GetAll(MovieQuery query);
         MovieDto GetById(int movieId);
         void Update(int movieId, CreateMovieDto dto);
     }

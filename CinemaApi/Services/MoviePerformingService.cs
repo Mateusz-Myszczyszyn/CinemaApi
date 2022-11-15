@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,15 +25,41 @@ namespace CinemaApi.Services
             _mapper = mapper;
         }
 
-        public List<MoviePerformingDto> GetAll()
+        public PagedResult<MoviePerformingDto> GetAll(MoviePerformingQuery query)
         {
-            var movieperf = _context.MoviePerformings.ToList();
+            var basicQuery = _context.MoviePerformings
+                .Include(c=>c.Movie)
+                .Include(c=>c.CinemaHall)
+                .Where(c => query.SearchPhrase == null || (c.CinemaHall.HallName.ToLower().Contains(query.SearchPhrase.ToLower()))
+                || (c.Movie.Title.ToLower().Contains(query.SearchPhrase.ToLower())));
 
-            var movieperfMapped = _mapper.Map<List<MoviePerformingDto>>(movieperf);
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<MoviePerforming, object>>>
+                {
+                    {nameof(MoviePerforming.Movie.Title), r=>r.Movie.Title},
+                    {nameof(MoviePerforming.CinemaHall.HallName), r=>r.CinemaHall.HallName },
+                };
 
-            if (!movieperfMapped.Any()) throw new NotFoundException("List of movie performings do not exist");
+                var selectedColumn = columnsSelector[query.SortBy];
 
-            return movieperfMapped;
+                basicQuery = query.SortDirection == SortDirection.ASC
+                    ? basicQuery.OrderBy(selectedColumn)
+                    : basicQuery.OrderByDescending(selectedColumn);
+            }
+
+            var moviePerformings = basicQuery
+                .Skip(query.PageItems * (query.PageNumber - 1))
+                .Take(query.PageItems)
+                .ToList();
+
+            var totalCount = basicQuery.Count();
+
+            var moviePerformingsDtos = _mapper.Map<List<MoviePerformingDto>>(moviePerformings);
+
+            var result = new PagedResult<MoviePerformingDto>(moviePerformingsDtos, totalCount, query.PageItems, query.PageNumber);
+
+            return result;
         }
 
         public MoviePerformingDto GetById(int moviePerfId)

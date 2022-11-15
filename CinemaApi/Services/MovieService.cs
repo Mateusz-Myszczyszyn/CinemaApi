@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
+using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CinemaApi.Services
 {
@@ -17,13 +20,38 @@ namespace CinemaApi.Services
             _mapper = mapper;
         }
 
-        public List<MovieDto> GetAll()
+        public PagedResult<MovieDto> GetAll(MovieQuery query)
         {
-            var movies = _context.Movies.ToList();
-            var moviesMap = _mapper.Map<List<MovieDto>>(movies);
-            if (!moviesMap.Any()) throw new NotFoundException("Movies not found");
+            var basicQuery = _context.Movies
+            .Where(c => query.SearchPhrase == null || (c.Title.ToLower().Contains(query.SearchPhrase.ToLower()))
+                || (c.Description.ToLower().Contains(query.SearchPhrase.ToLower())));
 
-            return moviesMap;
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<Movie, object>>>
+                {
+                    {nameof(Movie.Premiere), r=>r.Premiere }
+                };
+
+                var selectedColumn = columnsSelector[query.SortBy];
+
+                basicQuery = query.SortDirection == SortDirection.ASC
+                    ? basicQuery.OrderBy(selectedColumn)
+                    : basicQuery.OrderByDescending(selectedColumn);
+            }
+
+            var Movies = basicQuery
+                .Skip(query.PageItems * (query.PageNumber - 1))
+                .Take(query.PageItems)
+                .ToList();
+
+            var totalCount = basicQuery.Count();
+
+            var MoviesDto = _mapper.Map<List<MovieDto>>(Movies);
+
+            var result = new PagedResult<MovieDto>(MoviesDto, totalCount, query.PageItems, query.PageNumber);
+
+            return result;
         }
 
         public MovieDto GetById(int movieId)

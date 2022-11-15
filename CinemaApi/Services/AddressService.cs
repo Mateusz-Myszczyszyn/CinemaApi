@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CinemaApi.Services
 {
@@ -17,16 +19,42 @@ namespace CinemaApi.Services
             _context = context;
             _mapper = mapper;
         }
-        public List<AddressDto> GetAll(int cinemaId)
+        public PagedResult<AddressDto> GetAll(int cinemaId, AddressQuery query)
         {
-            var cinema = GetCinemaById(cinemaId);
-            
-            var AddressesDto = _mapper.Map<List<AddressDto>>(cinema.Addresses);
+            var basicQuery = _context.Addresses
+                .Include(c => c.Cinema)
+                .Where(c=>c.CinemaId == cinemaId)
+                .Where(c => query.SearchPhrase == null || (c.City.ToLower().Contains(query.SearchPhrase.ToLower()))
+                || (c.Street.ToLower().Contains(query.SearchPhrase.ToLower())));
+                
 
-            if (!AddressesDto.Any()) throw new NotFoundException($"Addresses for this cinema({cinemaId}) do not exist");
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var columnsSelector = new Dictionary<string, Expression<Func<Address, object>>>
+                {
+                    {nameof(Address.City), r=>r.City },
+                    {nameof(Address.Street), r=>r.Street },
+                };
 
-            return AddressesDto;
+                var selectedColumn = columnsSelector[query.SortBy];
 
+                basicQuery = query.SortDirection == SortDirection.ASC
+                    ? basicQuery.OrderBy(selectedColumn)
+                    : basicQuery.OrderByDescending(selectedColumn);
+            }
+
+            var cinemaAddresses = basicQuery
+                .Skip(query.PageItems * (query.PageNumber - 1))
+                .Take(query.PageItems)
+                .ToList();
+
+            var totalCount = basicQuery.Count();
+
+            var CinemaAddressesDtos = _mapper.Map<List<AddressDto>>(cinemaAddresses);
+
+            var result = new PagedResult<AddressDto>(CinemaAddressesDtos, totalCount, query.PageItems, query.PageNumber);
+
+            return result;
         }
 
         public AddressDto GetById(int cinemaId, int addressId)

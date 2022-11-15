@@ -19,11 +19,11 @@ namespace CinemaApi.Services
     {
         private readonly CinemaDbContext _context;
         private readonly IMapper _mapper;
-        private readonly UserContextService _userContext;
+        private readonly IUserContextService _userContext;
         private readonly IAuthorizationService _authService;
         private readonly ILogger<SeatReservationService> _logger;
 
-        public SeatReservationService(CinemaDbContext context, IMapper mapper, UserContextService userContext,IAuthorizationService authService
+        public SeatReservationService(CinemaDbContext context, IMapper mapper, IUserContextService userContext,IAuthorizationService authService
             ,ILogger<SeatReservationService> logger)
         {
             _context = context;

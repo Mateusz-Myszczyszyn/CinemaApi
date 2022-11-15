@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using CinemaApi.Dtos.CreateDtos;
 using CinemaApi.Dtos.EntitiesDtos;
+using CinemaApi.Dtos.Pagination;
 using CinemaApi.Entities;
 using CinemaApi.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,16 +25,40 @@ namespace CinemaApi.Services
             _mapper = mapper;
         }
 
-        public List<ScreenPlayDto> GetAll()
+        public PagedResult<ScreenPlayDto> GetAll(ScreenPlayQuery query)
         {
-            var screenPlays = _context.ScreenPlays
-                .Include(c => c.MoviePerforming).ToList();
+            var basicQuery = _context.ScreenPlays
+                .Include(c => c.MoviePerforming)
+                .Where(c => query.SearchPhrase == null || c.DigitalView.ToLower().Contains(query.SearchPhrase.ToLower())
+                || c.ShowTime.ToString().ToLower().Contains(query.SearchPhrase.ToLower()));
 
-            var mappedScrPlays = _mapper.Map<List<ScreenPlayDto>>(screenPlays);
+            if (!string.IsNullOrEmpty(query.SortBy))
+            {
+                var columnSelector = new Dictionary<string, Expression<Func<ScreenPlay, object>>>()
+                {
+                    {nameof(ScreenPlay.DigitalView),c=>c.DigitalView},
+                    {nameof(ScreenPlay.ShowTime),c=>c.ShowTime }
+                };
 
-            if (!mappedScrPlays.Any()) throw new NotFoundException("Playing hours for movies do not exist");
+                var selectedColumn = columnSelector[query.SortBy];
 
-            return mappedScrPlays;
+                basicQuery = query.SortDirection == SortDirection.ASC 
+                    ? basicQuery.OrderBy(selectedColumn)
+                    : basicQuery.OrderByDescending(selectedColumn);
+            }
+
+            var screenPlays = basicQuery
+                .Skip(query.PageItems * (query.PageNumber - 1))
+                .Take(query.PageItems)
+                .ToList();
+
+            var totalCount = screenPlays.Count();
+
+            var screenPlayDtos = _mapper.Map<List<ScreenPlayDto>>(screenPlays);
+
+            var results = new PagedResult<ScreenPlayDto>(screenPlayDtos, totalCount, query.PageItems, query.PageNumber);
+
+            return results;
         }
 
         public ScreenPlayDto GetById(int screenPlayId)
