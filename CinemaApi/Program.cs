@@ -60,6 +60,7 @@ builder.Services.AddScoped<IScreenPlayService, ScreenPlayService>();
 builder.Services.AddScoped<ISeatReservationService, SeatReservationService>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 builder.Services.AddScoped<IUserContextService, UserContextService>();
+builder.Services.AddScoped<IUsersIssueService, UsersIssueService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddScoped<IValidator<LoginUserDto>, LoginUserDtoValidator>();
@@ -77,7 +78,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAny", builder =>
     {
-        builder.AllowAnyHeader()
+        builder.WithHeaders("application/json")
+        .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowAnyOrigin();
     });

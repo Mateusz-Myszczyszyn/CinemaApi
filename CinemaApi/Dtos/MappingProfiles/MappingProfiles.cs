@@ -23,6 +23,8 @@ namespace CinemaApi.Dtos.MappingProfiles
 
             CreateMap<CinemaDto, Cinema>();
 
+            CreateMap<CreateUserIssueDto,UsersIssues>();
+
             CreateMap<Movie, MovieDto>();
 
             CreateMap<CreateMovieDto, Movie>();
